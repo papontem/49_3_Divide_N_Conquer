@@ -21,6 +21,7 @@
 function countZeroes(arr) {
 	// Check if the array is empty
 	if (arr.length == 0) {
+		console.log("no elements in array");
 		return 0;
 	}
 
@@ -31,10 +32,12 @@ function countZeroes(arr) {
 
 	// Check if the array is only made of 1s
 	if (arr[rightIndex] == 1) {
+		console.log("array is not sorted or is only made of ones");
 		return count;
 	}
 	// Check if the array is only made of 0s
 	if (arr[leftIndex] == 0) {
+		console.log("array is not sorted or is only made of zeroes");
 		return arr.length;
 	}
 
@@ -51,12 +54,12 @@ function countZeroes(arr) {
 		} else if (arr[middleIndex] === 1 && arr[middleIndex + 1] === 1) {
 			// If the middle element is 1, it means we can probbly have zero or a one to the right,  move left index to the right
 			console.log("THIS IS A 1 with a one to the left of it");
-			leftIndex = leftIndex + 1;
+			leftIndex = leftIndex + middleIndex;
 		} else if (arr[middleIndex] === 0 && arr[middleIndex - 1] === 0) {
 			// If the middle element is 0, it means we can probbly have zeroes to the left or to the right, if we have a zero to the left move left index to the left
 			console.log("THIS IS A 0 with a zero to the left of it");
-			// revalue left index till we
-			leftIndex = leftIndex - 1;
+			// revalue left index to get the middle of left side
+			leftIndex = leftIndex - middleIndex;
 		} else if (arr[middleIndex] === 0 && arr[middleIndex - 1] === 1) {
 			// meaning we landed on the starting zero to count from.
 			console.log("THIS IS A 0 with a one to the left of it");
