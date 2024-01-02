@@ -15,5 +15,14 @@ describe("#countZeroes", function () {
         1, 1, 1, 1, 0,
 			])
 		).toBe(1);
+		expect(
+			countZeroes([
+				1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 
+        1, 0, 0, 0, 0,
+			])
+		).toBe(4);
 	});
 });

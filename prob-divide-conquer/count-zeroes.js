@@ -48,7 +48,7 @@ function countZeroes(arr) {
 		console.log("L", leftIndex, "R", rightIndex, "M", middleIndex);
 
 		if (arr[middleIndex] === 1) {
-            // If the middle element is 1, move right, unless on the right theres a 0
+			// If the middle element is 1, move right, unless on the right theres a 0
 			if (arr[middleIndex + 1] == 0) {
 				console.log("THIS IS A 1 with a zero to the right of it");
 				// If the middle element is 1, it means our zeroes are further to the right side, and if the next value is a 0, we can count here
@@ -57,7 +57,7 @@ function countZeroes(arr) {
 			} else if (arr[middleIndex + 1] === 1) {
 				// If the middle element is 1, it means we can probbly have zero or a one to the right,  move left index to the right
 				console.log("THIS IS A 1 with a one to the left of it");
-				leftIndex = leftIndex + middleIndex/2;
+				leftIndex = Math.floor(leftIndex + middleIndex / 2);
 			}
 		} else if (arr[middleIndex] === 0) {
 			// If the middle element is 0, move left, unless on the left theres a 1
@@ -65,7 +65,7 @@ function countZeroes(arr) {
 				console.log("THIS IS A 0 with a zero to the left of it");
 				// if we have a zero to the left move left index to the left
 				// revalue left index to get the middle of left side
-				leftIndex = leftIndex - middleIndex/2;
+				leftIndex = Math.floor(leftIndex - middleIndex / 2);
 			} else if (arr[middleIndex - 1] === 1) {
 				console.log("THIS IS A 0 with a one to the left of it");
 				// if we have a one to the left,
