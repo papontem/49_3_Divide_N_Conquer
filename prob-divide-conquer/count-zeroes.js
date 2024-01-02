@@ -46,31 +46,68 @@ function countZeroes(arr) {
 		// get new middle index
 		middleIndex = Math.floor((leftIndex + rightIndex) / 2);
 		console.log("L", leftIndex, "R", rightIndex, "M", middleIndex);
-		if (arr[middleIndex] === 1 && arr[middleIndex + 1] == 0) {
-			console.log("THIS IS A 1 with a zero to the right of it");
-			// If the middle element is 1, it means our zeroes are further to the right side, and if the next value is a 0, we can count here
-			count = rightIndex - middleIndex;
-			leftIndex = rightIndex + 1; // exit while loop
-		} else if (arr[middleIndex] === 1 && arr[middleIndex + 1] === 1) {
-			// If the middle element is 1, it means we can probbly have zero or a one to the right,  move left index to the right
-			console.log("THIS IS A 1 with a one to the left of it");
-			leftIndex = leftIndex + middleIndex;
-		} else if (arr[middleIndex] === 0 && arr[middleIndex - 1] === 0) {
-			// If the middle element is 0, it means we can probbly have zeroes to the left or to the right, if we have a zero to the left move left index to the left
-			console.log("THIS IS A 0 with a zero to the left of it");
-			// revalue left index to get the middle of left side
-			leftIndex = leftIndex - middleIndex;
-		} else if (arr[middleIndex] === 0 && arr[middleIndex - 1] === 1) {
-			// meaning we landed on the starting zero to count from.
-			console.log("THIS IS A 0 with a one to the left of it");
-			// we count here and then exit
-			count = rightIndex + 1 - middleIndex;
-			leftIndex = rightIndex + 1; // exit while loop
+
+		if (arr[middleIndex] === 1) {
+            // If the middle element is 1, move right, unless on the right theres a 0
+			if (arr[middleIndex + 1] == 0) {
+				console.log("THIS IS A 1 with a zero to the right of it");
+				// If the middle element is 1, it means our zeroes are further to the right side, and if the next value is a 0, we can count here
+				count = rightIndex - middleIndex;
+				leftIndex = rightIndex + 1; // exit while loop
+			} else if (arr[middleIndex + 1] === 1) {
+				// If the middle element is 1, it means we can probbly have zero or a one to the right,  move left index to the right
+				console.log("THIS IS A 1 with a one to the left of it");
+				leftIndex = leftIndex + middleIndex/2;
+			}
+		} else if (arr[middleIndex] === 0) {
+			// If the middle element is 0, move left, unless on the left theres a 1
+			if (arr[middleIndex - 1] === 0) {
+				console.log("THIS IS A 0 with a zero to the left of it");
+				// if we have a zero to the left move left index to the left
+				// revalue left index to get the middle of left side
+				leftIndex = leftIndex - middleIndex/2;
+			} else if (arr[middleIndex - 1] === 1) {
+				console.log("THIS IS A 0 with a one to the left of it");
+				// if we have a one to the left,
+				// meaning we landed on the starting zero to count from.
+				// we count here and then exit
+				count = rightIndex + 1 - middleIndex;
+				leftIndex = rightIndex + 1; // exit while loop
+			}
 		}
 	}
+
 	console.log("RETURNING:", count);
 
 	return count;
 }
 
 module.exports = countZeroes;
+
+// demo/binarySearch.js
+
+// function binarySearch(arr, val) {
+
+//   let leftIdx = 0;
+//   let rightIdx = arr.length - 1;
+
+//   while (leftIdx <= rightIdx) {
+//     // find the middle value
+//     let middleIdx = Math.floor((leftIdx + rightIdx) / 2);
+//     let middleVal = arr[middleIdx];
+
+//     if (middleVal < val) {
+//       // middleVal is too small, look at the right half
+//       leftIdx = middleIdx + 1;
+//     } else if (middleVal > val) {
+//       // middleVal is too large, look at the left half
+//       rightIdx = middleIdx - 1;
+//     } else {
+//       // we found our value!
+//       return middleIdx;
+//     }
+//   }
+
+//   // left and right pointers crossed, val isn't in arr
+//   return -1;
+// }
