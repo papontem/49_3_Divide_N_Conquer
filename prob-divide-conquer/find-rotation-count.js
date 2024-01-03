@@ -16,29 +16,29 @@
  *
  * PAM: the array's smallest number will be the clue to finding out how many times a sorted array has been rotated counter clockwise.
  * It baisically tells us how many times a number has been put in front of it.
+ * This is just a findMin() function in disguise that uses a binary search algorythms to solv for smallest number and returns its index
  */
-// PAM: this is just a findMin() function in disguise
+
 function findRotationCount(arr) {
 	let left = 0;
 	let right = arr.length - 1;
-    let count;
-	while (left <= right) {
-		let middleIdx = Math.floor((left + right) / 2);
-		let middleVal = arr(middleIdx);
-		console.log("MIddle Index:", middleIdx);
-		console.log("MIddle Val:", middleVal);
-		console.log(
-			"L",
-			leftIdx,
-			"R",
-			rightIdx,
-			"middleIdx",
-			middleIdx,
-			"MidVal",
-			middleVal
-		);
 
+	// If the array is already sorted, the rotation count is 0
+	if (arr[left] <= arr[right]) {
+		return 0;
 	}
+
+	let count = 0;
+    let min;
+    let newMin;
+
+	while (left <= right && count <= arr.length) {
+		let middleIdx = Math.floor((left + right) / 2);
+		let middleVal = arr[middleIdx];
+       
+		count++;
+	}
+    return count
 }
 
 module.exports = findRotationCount;
