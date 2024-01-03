@@ -17,8 +17,88 @@
  *     findRotatedIndex([6, 7, 8, 9, 1, 2, 3, 4], 12) // -1
  *
  */
-function findRotatedIndex() {
-	let left = 0;
+//       v
+// [ 3 , 4 , 1 , 2 ] > 4 <
+//       v
+// [ 3 , 4 , 1 , 2 ] <4>
+
+//  |        v           |
+// [6, 7, 8, 9, 1, 2, 3, 4]  > 8 <
+//  |  v  |
+// [6, 7, 8, 9, 1, 2, 3, 4]
+//       |v|
+// [6, 7, 8, 9, 1, 2, 3, 4]  <8>
+
+//           v
+// [6, 7, 8, 9, 1, 2, 3, 4]  > 3 <
+//              |  v     |
+// [6, 7, 8, 9, 1, 2, 3, 4]
+//                   |v  |
+// [6, 7, 8, 9, 1, 2, 3, 4] <3>
+
+//            v
+// [ 37, 44, 66, 102, 10, 22]  > 14 <
+//                 |   v   |
+// [ 37, 44, 66, 102, 10, 22]
+//                        |v|
+// [ 37, 44, 66, 102, 10, 22]
+
+function findRotatedIndex(arr, n) {
+	let leftIdx = 0;
+	let rightIdx = arr.length - 1;
+	// our infinity loop stopper
+	count = 0;
+
+	while (leftIdx <= rightIdx) {
+		let middleIdx = Math.floor((leftIdx + rightIdx) / 2);
+		let middleVal = arr[middleIdx];
+		console.log("MIddle Index:", middleIdx);
+		console.log("MIddle Val:", middleVal);
+		console.log(
+			"L",
+			leftIdx,
+			"R",
+			rightIdx,
+			"middleIdx",
+			middleIdx,
+			"MidVal",
+			middleVal,
+			"target:",
+			n
+		);
+
+		if (middleVal == n) {
+			console.log("RETURNING :", middleVal);
+			return middleIdx;
+		}
+
+		let rightVal = arr[rightIdx];
+		let leftVal = arr[leftIdx];
+
+		// is middle value greater than or equal to the left value, true means were on the left side
+		if (middleVal >= leftVal) {
+			// if we check then if n is between these two values, we can see if we should move left or right
+			if (middleVal > n && n >= leftVal) {
+				// n is towards our left
+				rightIdx = middleIdx - 1;
+			} else {
+				// n is towards our right
+				leftIdx = middleIdx + 1;
+			}
+		} else {
+			// false means were on the right side, ergo if we check
+			if (middleVal < n && n <= rightVal) {
+				// true means n is towards our right
+				leftIdx = middleIdx + 1;
+			} else {
+				// n is towards our left
+				rightIdx = middleIdx - 1;
+			}
+		}
+	}
+	// value was never found
+	console.log("NOT FOUND RETURNING -1");
+	return -1;
 }
 
 module.exports = findRotatedIndex;
