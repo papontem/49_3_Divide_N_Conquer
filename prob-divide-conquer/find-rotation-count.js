@@ -17,28 +17,46 @@
  * PAM: the array's smallest number will be the clue to finding out how many times a sorted array has been rotated counter clockwise.
  * It baisically tells us how many times a number has been put in front of it.
  * This is just a findMin() function in disguise that uses a binary search algorythms to solv for smallest number and returns its index
+ * the smallest number will always have a number that is as much or greater than is value to the right and to the left of it, if its not the first or last number.
  */
-
 function findRotationCount(arr) {
-	let left = 0;
-	let right = arr.length - 1;
+	let data = {
+		left: 0,
+		right: arr.length - 1,
+		count: 0,
+		farLeft: 0,
+		farRight: arr.length - 1,
+	};
 
-	// If the array is already sorted, the rotation count is 0
-	if (arr[left] <= arr[right]) {
-		return 0;
+	while (data.left <= data.right && data.count <= arr.length) {
+		data.middleIdx = Math.floor((data.left + data.right) / 2);
+		data.middleVal = arr[data.middleIdx];
+
+		// check if we are the only element in array, or if we have either or a higher value on the data.left and on the data.right
+		if (
+			(data.middleIdx === data.farLeft ||
+				data.middleVal < arr[data.middleIdx - 1]) &&
+			(data.middleIdx === data.farRight || data.middleVal < arr[data.middleIdx + 1])
+		) {
+            console.log("loop data:", data);
+			return data.middleIdx;
+		}
+
+		// move data.left or data.right depending
+		if (data.middleVal < arr[data.right]) {
+			// move more to the data.left
+			data.right = data.middleIdx - 1;
+		} else {
+			// move more to the data.right
+			data.left = data.middleIdx + 1;
+		}
+
+		data.count++;
+		console.log("loop data:", data);
 	}
 
-	let count = 0;
-    let min;
-    let newMin;
-
-	while (left <= right && count <= arr.length) {
-		let middleIdx = Math.floor((left + right) / 2);
-		let middleVal = arr[middleIdx];
-       
-		count++;
-	}
-    return count
+	// If the array is not rotated
+	return 0;
 }
 
 module.exports = findRotationCount;
