@@ -20,7 +20,7 @@
  * the smallest number will always have a number that is as much or greater than is value to the right and to the left of it, if its not the first or last number.
  */
 function findRotationCount(arr) {
-	let data = {
+	let searchData = {
 		left: 0,
 		right: arr.length - 1,
 		count: 0,
@@ -28,31 +28,29 @@ function findRotationCount(arr) {
 		farRight: arr.length - 1,
 	};
 
-	while (data.left <= data.right && data.count <= arr.length) {
-		data.middleIdx = Math.floor((data.left + data.right) / 2);
-		data.middleVal = arr[data.middleIdx];
+	while (searchData.left <= searchData.right && searchData.count <= arr.length) {
+		searchData.middleIdx = Math.floor((searchData.left + searchData.right) / 2);
+		searchData.middleVal = arr[searchData.middleIdx];
 
-		// check if we are the only element in array, or if we have either or a higher value on the data.left and on the data.right
+		// check if we are the only element in the array, or if we have either a higher value on the left or on the right
 		if (
-			(data.middleIdx === data.farLeft ||
-				data.middleVal < arr[data.middleIdx - 1]) &&
-			(data.middleIdx === data.farRight || data.middleVal < arr[data.middleIdx + 1])
+			(searchData.middleIdx === searchData.farLeft ||
+				searchData.middleVal < arr[searchData.middleIdx - 1]) &&
+			(searchData.middleIdx === searchData.farRight ||
+				searchData.middleVal < arr[searchData.middleIdx + 1])
 		) {
-            console.log("loop data:", data);
-			return data.middleIdx;
+			// If the current index is the smallest element, return it
+			return searchData.middleIdx;
 		}
 
-		// move data.left or data.right depending
-		if (data.middleVal < arr[data.right]) {
-			// move more to the data.left
-			data.right = data.middleIdx - 1;
+		// move left or right depending on the values
+		if (searchData.middleVal < arr[searchData.right]) {
+			searchData.right = searchData.middleIdx - 1;
 		} else {
-			// move more to the data.right
-			data.left = data.middleIdx + 1;
+			searchData.left = searchData.middleIdx + 1;
 		}
 
-		data.count++;
-		console.log("loop data:", data);
+		searchData.count++;
 	}
 
 	// If the array is not rotated
@@ -60,6 +58,7 @@ function findRotationCount(arr) {
 }
 
 module.exports = findRotationCount;
+
 
 // demo/binarySearch.js
 
